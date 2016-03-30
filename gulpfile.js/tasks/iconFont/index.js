@@ -7,6 +7,7 @@ var generateIconSass = require('./generateIconSass')
 var handleErrors     = require('../../lib/handleErrors')
 var package          = require('../../../package.json')
 var path             = require('path')
+var url              = require('url')
 
 var fontPath = path.join(config.root.dest, config.tasks.iconFont.dest)
 var cssPath = path.join(config.root.dest, config.tasks.css.dest)
@@ -18,13 +19,11 @@ var settings = {
   sassDest: path.join(config.root.src, config.tasks.css.src, config.tasks.iconFont.sassDest),
   template: path.normalize('./gulpfile.js/tasks/iconFont/template.sass'),
   sassOutputName: '_icons.sass',
-  fontPath: path.relative(cssPath, fontPath),
+  fontPath: url.resolve('.',path.relative(cssPath, fontPath)),
   className: 'icon',
   options: {
-    svg: true,
     timestamp: 0, // see https://github.com/fontello/svg2ttf/issues/33
     fontName: 'icons',
-    appendUnicode: true,
     normalize: false,
     formats: config.tasks.iconFont.extensions
   }
